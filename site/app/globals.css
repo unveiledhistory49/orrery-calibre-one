@@ -1,0 +1,192 @@
+:root {
+  --case-black: #111214;
+  --dial-ivory: #ede4d2;
+  --plate-steel: #84867f;
+  --brass: #b08d57;
+  --lume: #7fe3c4;
+
+  --surface: var(--case-black);
+  --ink: var(--dial-ivory);
+  --hairline: var(--plate-steel);
+  --accent: var(--brass);
+
+  --gutter-x: clamp(20px, 4vw, 80px);
+  --gutter-y: clamp(24px, 4vw, 64px);
+
+  --fs-xxs: 0.6875rem;
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-md: 1rem;
+  --fs-lg: clamp(1.25rem, 1.6vw, 1.75rem);
+  --fs-display: clamp(3.5rem, 18vw, 22rem);
+  --fs-display-tight: clamp(3rem, 14vw, 16rem);
+
+  --track: 0.18em;
+  --ease-precise: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out-mech: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Three roles, none of them the AI default. Named faces are listed first for
+     users who have them; generic fallbacks keep the design honest everywhere. */
+  --font-display: "Fraunces", "Canela", "Reckless Neue", "Spectral",
+    "Iowan Old Style", "Source Serif Pro", Georgia, "Times New Roman", serif;
+  --font-sans: "Schibsted Grotesk", "NH Grotesk", "Neue Haas Grotesk",
+    "General Sans", "Inter Tight", system-ui, -apple-system, BlinkMacSystemFont,
+    "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", "JetBrains Mono", "SFMono-Regular", ui-monospace,
+    Menlo, Consolas, "Liberation Mono", monospace;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--brass);
+  color: var(--case-black);
+}
+
+:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 0;
+  z-index: 1000;
+  background: var(--case-black);
+  color: var(--dial-ivory);
+  padding: 12px 20px;
+  font-size: var(--fs-xs);
+  letter-spacing: var(--track);
+  text-transform: uppercase;
+  border: 1px solid var(--brass);
+}
+.skip-link:focus {
+  top: 0;
+}
+
+.mono {
+  font-family: var(--font-mono, "IBM Plex Mono", ui-monospace, monospace);
+  font-feature-settings: "tnum" 1, "zero" 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.label {
+  font-size: var(--fs-xxs);
+  letter-spacing: var(--track);
+  text-transform: uppercase;
+  color: var(--hairline);
+}
+
+.hairline {
+  background: var(--hairline);
+}
+
+.hidden-visually {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 767.98px) {
+  .nav-desktop { display: none !important; }
+  .nav-mobile { display: inline-flex !important; }
+
+  /* Hero dial tucks behind type, never under it */
+  .hero-face {
+    width: min(75vw, 70vh) !important;
+    right: -25vw !important;
+    top: 22vh !important;
+    transform: none !important;
+    opacity: 0.25 !important;
+  }
+
+  /* The persistent corner readout duplicates spec on a small screen,
+     hide it so nothing crowds the edges. */
+  .readout { display: none !important; }
+
+  /* Scene 02 — drop the layered planes; type gets the whole screen */
+  .scene-02-stack { display: none !important; }
+  .scene-02-tols {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    padding: calc(var(--gutter-y) * 1.6) var(--gutter-x) 0;
+    font-size: 0.625rem !important;
+  }
+  .scene-02-headline {
+    padding-top: calc(var(--gutter-y) * 0.4) !important;
+    justify-content: flex-start !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .nav-mobile { display: none !important; }
+  .hero-type { max-width: 60vw; }
+  .hero-type-stack { max-width: 56vw; }
+}
+
+@media (min-width: 1440px) {
+  .hero-type { max-width: 56vw; }
+  .hero-type-stack { max-width: 48vw; }
+}
+
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .hero-face { width: min(50vw, 70vh) !important; right: -8vw !important; opacity: 0.5 !important; }
+  .hero-type { max-width: 64vw; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
